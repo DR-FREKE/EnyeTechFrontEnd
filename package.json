@@ -1,6 +1,10 @@
 {
   "name": "enyetechfrontend",
   "version": "0.1.0",
+  "engines": {
+    "node": "12.18.2",
+    "npm": "6.14.5"
+  },
   "private": true,
   "dependencies": {
     "@testing-library/jest-dom": "^5.11.4",
