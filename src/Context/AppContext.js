@@ -16,6 +16,7 @@ export const Provider = (props) => {
     filtering: false,
     author: "Solomon Ndifereke",
     display: false,
+    searching: false,
   };
   const [state, setState] = useState(initialState);
 

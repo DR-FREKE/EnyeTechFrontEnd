@@ -73,18 +73,102 @@ header {
   padding: 3em 4em;
   background-color: #f7f8fa;
 }
+
+/* design loader here */
+.spinner {
+  width: 100%;
+  height: 21px;
+  text-align: center;
+  font-size: 10px;
+  margin-top: 30vh;
+}
+.spinner > div {
+  margin: auto 1px;
+  background-color: #ff9500;
+  height: 100%;
+  width: 2px;
+  border-radius: 2px;
+  display: inline-block;
+
+  -webkit-animation: sk-stretchdelay 1.2s infinite ease-in-out;
+  animation: sk-stretchdelay 1.2s infinite ease-in-out;
+}
+.spinner .rect2 {
+  -webkit-animation-delay: -1.1s;
+  animation-delay: -1.1s;
+}
+
+.spinner .rect3 {
+  -webkit-animation-delay: -1s;
+  animation-delay: -1s;
+}
+
+.spinner .rect4 {
+  -webkit-animation-delay: -0.9s;
+  animation-delay: -0.9s;
+}
+
+.spinner .rect5 {
+  -webkit-animation-delay: -0.8s;
+  animation-delay: -0.8s;
+}
+
+/* grid body here */
 .grid {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
   grid-gap: 1em;
   grid-auto-rows: minmax(100px, auto);
 }
-.grid > div {
+/* .grid > div {
   background-color: #aaaaaa;
 }
 .grid > div:nth-child(odd) {
   background-color: #cccccc;
+} */
+.grid .box {
+  background-color: transparent;
 }
+.card-holder {
+  display: flex;
+  justify-content: flex-start;
+  height: 100%;
+  border-radius: 4px;
+  padding: 1em;
+  background-color: #fff;
+  box-shadow: rgba(0, 0, 0, 0.5);
+  font-size: 13px;
+  font-family: "Montserrat", sans-serif;
+  color: #242424;
+}
+.card-holder .avatar {
+  display: flex;
+  align-items: center;
+  /* background-color: yellow; */
+  padding: 0 1em 0 0;
+}
+.avatar > img {
+  width: 4em;
+  height: 4em;
+  border-radius: 50%;
+  border: 2px solid #ff9500;
+}
+.card-holder .ellipses {
+  display: flex;
+  align-items: center;
+  margin-left: auto;
+  /* background-color: red; */
+}
+.card-holder .ellipses::after {
+  cursor: pointer;
+  content: "\2807";
+  font-size: 1.5em;
+}
+.card-holder .details {
+  display: flex;
+  align-items: center;
+}
+
 .pagination_div {
   display: flex;
   margin-top: 10px;
@@ -153,6 +237,7 @@ header {
   border-radius: 3px;
 }
 .search_bar button {
+  cursor: pointer;
   padding: 0 0.5em;
   padding-right: 0;
   height: 100%;
@@ -245,7 +330,7 @@ header {
 .select {
 }
 
-/*some animations*/
+/*some animations... add  all keyframes here*/
 @-webkit-keyframes animatetop {
   from {
     top: -300px;
@@ -265,6 +350,30 @@ header {
   to {
     top: 0;
     opacity: 1;
+  }
+}
+/* keyframe for loader */
+@-webkit-keyframes sk-stretchdelay {
+  0%,
+  40%,
+  100% {
+    -webkit-transform: scaleY(0.4);
+  }
+  20% {
+    -webkit-transform: scaleY(1);
+  }
+}
+
+@keyframes sk-stretchdelay {
+  0%,
+  40%,
+  100% {
+    transform: scaleY(0.4);
+    -webkit-transform: scaleY(0.4);
+  }
+  20% {
+    transform: scaleY(1);
+    -webkit-transform: scaleY(1);
   }
 }
 

@@ -6,6 +6,7 @@ import {
   FilterContainer,
   Pagination,
   TopItemMenu,
+  Loader,
 } from "../Components/Widgets";
 
 const UserProfile = (props) => {
@@ -18,10 +19,12 @@ const UserProfile = (props) => {
   useEffect(() => {
     if (state.filtering == true) {
       handleFilter(state.itemToFilter);
+    } else if (state.searching == true) {
+      handleSearch(state.itemToSearch);
     } else {
       loadList();
     }
-  }, [state.currentPage, state.filtering]);
+  }, [state.currentPage, state.filtering, state.searching]);
 
   const getUserProfile = async () => {
     try {
@@ -46,6 +49,7 @@ const UserProfile = (props) => {
       ...state,
       itemOnPage: state.profile.slice(begin, end),
     });
+    console.log(state.itemOnPage);
   };
 
   const handleNext = () => {
@@ -99,15 +103,11 @@ const UserProfile = (props) => {
   const handleFilter = (data) => {
     const begin = (state.currentPage - 1) * 20;
     const end = begin + 20;
-    let result;
 
     //get the profile from the state and filter with data then update the state
-    Object.keys(data).map((key) => {
-      if (data[key] != "") {
-        result = state.profile.filter((content) => content[key] == data[key]);
-      }
-    });
-
+    const result = state.profile.filter(
+      (content) => content.Gender == data.gender
+    );
     setState({
       ...state,
       itemOnPage: result.slice(begin, end),
@@ -118,14 +118,35 @@ const UserProfile = (props) => {
     });
   };
 
+  const handleSearch = (data) => {
+    const new_data = data.split(" ");
+
+    //get the profile from state and search by the data provided in parameter
+    const result = state.profile.filter(
+      (content) =>
+        content.FirstName == new_data[0] ||
+        content.FirstName == new_data[1] ||
+        content.LastName == new_data[0] ||
+        content.LastName == new_data[1]
+    );
+    setState({
+      ...state,
+      itemOnPage: result,
+      searching: true,
+      itemToSearch: data,
+      size: result.length,
+      currentPage: parseInt(Math.ceil(result.length / 20)),
+    });
+  };
+
   const itemToShow = () => {
     let itemToDisplay;
     if (state.loading == true) {
-      itemToDisplay = "loading";
+      itemToDisplay = <Loader />;
     } else {
       itemToDisplay = (
         <>
-          <TopItemMenu />
+          <TopItemMenu handleSearch={handleSearch} />
           <div className="grid">
             {state.itemOnPage.map((content) => (
               <div className="box box1">

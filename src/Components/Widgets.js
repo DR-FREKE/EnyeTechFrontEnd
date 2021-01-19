@@ -3,6 +3,19 @@ import { AppContext } from "../Context/AppContext";
 
 let paginationBtnNum = 1;
 
+export const Loader = (props) => (
+  <>
+    {/* <span>Loading</span> */}
+    <div class="spinner">
+      <div class="rect1"></div>
+      <div class="rect2"></div>
+      <div class="rect3"></div>
+      <div class="rect4"></div>
+      <div class="rect5"></div>
+    </div>
+  </>
+);
+
 export const Pagination = (props) => {
   return (
     <div class="pagination">
@@ -43,25 +56,36 @@ export const callBackMethod = (cb) => {
 export const TopItemMenu = (props) => (
   <div className="top_menu">
     <div className="page_name">
-      <span>Profile</span>
+      <span>Profiles</span>
     </div>
     <div className="search_filter">
-      <SearchBar />
+      <SearchBar handleSearch={props.handleSearch} />
       <FilterButton />
     </div>
   </div>
 );
 
-export const SearchBar = (props) => (
-  <div className="search_div">
-    <div className="search_bar">
-      <button>
-        <i className="fa fa-search"></i>
-      </button>
-      <input type="search" name="" placeholder="Search" />
+export const SearchBar = (props) => {
+  const [search, setSearch] = useState("");
+  const handleChange = (e) => {
+    setSearch(e.target.value);
+  };
+  return (
+    <div className="search_div">
+      <div className="search_bar">
+        <button onClick={() => props.handleSearch(search)}>
+          <i className="fa fa-search"></i>
+        </button>
+        <input
+          type="search"
+          name=""
+          placeholder="Search"
+          onChange={handleChange}
+        />
+      </div>
     </div>
-  </div>
-);
+  );
+};
 
 export const Modal = (props) => {
   const [state, setState] = useContext(AppContext);
@@ -96,9 +120,9 @@ export const Modal = (props) => {
 
 export const FilterContainer = (props) => {
   const initialState = {
-    Gender: "",
-    CreditCardType: "",
-    PaymentMethod: "",
+    gender: "",
+    card: "",
+    payment_method: "",
   };
   const [input, setInput] = useState(initialState);
 
@@ -114,7 +138,7 @@ export const FilterContainer = (props) => {
         <div className="input-box1">
           <label>Filter By Gender</label>
           <div className="input_div">
-            <select name="Gender" value={input.Gender} onChange={handleChange}>
+            <select name="gender" value={input.gender} onChange={handleChange}>
               <option>Choose...</option>
               <option value="Male">Male</option>
               <option value="Female">Female</option>
@@ -126,8 +150,8 @@ export const FilterContainer = (props) => {
           <div className="input_div">
             <input
               type="text"
-              name="CreditCardType"
-              value={input.CreditCardType}
+              name="card"
+              value={input.card}
               onChange={handleChange}
             />
           </div>
@@ -137,8 +161,8 @@ export const FilterContainer = (props) => {
           <div className="input_div">
             <input
               type="text"
-              name="PaymentMethod"
-              value={input.PaymentMethod}
+              name="payment_method"
+              value={input.payment_method}
               onChange={handleChange}
             />
           </div>
