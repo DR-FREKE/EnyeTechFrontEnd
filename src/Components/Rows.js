@@ -3,7 +3,7 @@ import React from "react";
 export const Card = (props) => (
   <div className="card-holder">
     <div className="avatar">
-      <img src="" alt="" />
+      <img src="../../assets/img/theme/avatar.webp" alt="avatar" />
     </div>
     <div className="details">
       <div className="info">

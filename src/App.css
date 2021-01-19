@@ -399,4 +399,10 @@ header {
   .modal-content {
     width: auto;
   }
+  .search_bar {
+    height: 100%;
+  }
+  .search_filter span {
+    display: none;
+  }
 }

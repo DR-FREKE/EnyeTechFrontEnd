@@ -187,7 +187,7 @@ export const FilterButton = (props) => {
   return (
     <div className="btn_div">
       <button className="btn btn-filter" onClick={openModal}>
-        <i className="fa fa-filter"></i> filter by
+        <i className="fa fa-filter"></i> <span>filter by</span>
       </button>
     </div>
   );
