@@ -18,10 +18,9 @@ const UserProfile = (props) => {
   });
 
   useEffect(() => {
-    getUserProfile();
-  }, []);
-
-  useEffect(() => {
+    if (state.profile.length <= 0) {
+      getUserProfile();
+    }
     if (state.filtering == true) {
       handleFilter(state.itemToFilter);
     } else if (state.searching == true) {
@@ -31,7 +30,13 @@ const UserProfile = (props) => {
         loadList();
       }
     }
-  }, [state.currentPage, state.filtering, state.searching, state.size]);
+  }, [
+    state.currentPage,
+    state.filtering,
+    state.searching,
+    state.size,
+    state.profile,
+  ]);
 
   const getUserProfile = async () => {
     try {
@@ -115,9 +120,19 @@ const UserProfile = (props) => {
     const end = begin + 20;
 
     //get the profile from the state and filter with data then update the state
-    const result = state.profile.filter(
-      (content) => content.Gender == data.gender
-    );
+    const result = state.profile.filter((content) => {
+      if (data.payment_method != "" && data.gender != "") {
+        return (
+          content.Gender == data.gender &&
+          content.PaymentMethod == data.payment_method
+        );
+      } else {
+        return (
+          content.Gender == data.gender ||
+          content.PaymentMethod == data.payment_method
+        );
+      }
+    });
     setState({
       ...state,
       itemOnPage: result.slice(begin, end),

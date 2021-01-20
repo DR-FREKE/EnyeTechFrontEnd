@@ -7,3 +7,7 @@ export const fetchprofileData = async () => {
     throw new Error();
   }
 };
+
+// export const fetchUserLocation = async (longitude, latitude) => {
+//   const response = await fetch(``)
+// }
