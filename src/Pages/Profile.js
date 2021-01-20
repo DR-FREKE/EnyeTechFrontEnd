@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useContext } from "react";
 import { AppContext } from "../Context/AppContext";
-import { fetchprofileData } from "../API/ProfileRequest";
+import { fetchprofileData, fetchUserLocation } from "../API/ProfileRequest";
 import { Card } from "../Components/Rows";
 import {
   FilterContainer,
@@ -37,6 +37,13 @@ const UserProfile = (props) => {
     state.size,
     state.profile,
   ]);
+
+  const getUserLocation = async (longitude, latitude) => {
+    try {
+      const result = await fetchUserLocation(longitude, latitude);
+      // alert(result);
+    } catch (error) {}
+  };
 
   const getUserProfile = async () => {
     try {
@@ -179,6 +186,7 @@ const UserProfile = (props) => {
       view: true,
       user_info: props,
     });
+    getUserLocation(props.Longitude, props.Latitude);
     setShow({ isActive: [] });
   };
 

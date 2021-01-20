@@ -92,7 +92,7 @@ export const SearchBar = (props) => {
         <input
           type="search"
           name=""
-          placeholder="Search"
+          placeholder="Search By Name"
           onChange={handleChange}
         />
       </div>
@@ -135,7 +135,7 @@ export const DetailContent = (props) => {
   return (
     <Modal
       modalTitle={`${props.user_info.FirstName} ${props.user_info.LastName}`}
-      style={{ marginTop: "8em" }}>
+      style={{ marginTop: "3em" }}>
       <div className="profile-content">
         <div className="profile-box profile-box1">
           <label>Gender</label>
@@ -149,15 +149,19 @@ export const DetailContent = (props) => {
           <label>Location</label>
           <div className="info_div">
             <div className="">
-              <span>{props.user_info.Latitude}</span>
+              <span>
+                {props.user_info.Latitude}, {props.user_info.Longitude}
+              </span>
             </div>
           </div>
         </div>
         <div className="profile-box profile-box3">
           <label>Credit Card Number</label>
           <div className="info_div">
-            <div className="">
-              <span>{props.user_info.CreditCardNumber}</span>
+            <div className="credit_card">
+              <span className="card_num">
+                {props.user_info.CreditCardNumber}
+              </span>
             </div>
           </div>
         </div>
