@@ -7,10 +7,28 @@ export const Card = (props) => (
     </div>
     <div className="details">
       <div className="info">
-        {props.FirstName} {props.LastName}
-        <p>{props.PhoneNumber}</p>
+        <span>
+          {props.FirstName} {props.LastName}
+        </span>
+        <span>
+          <i className="fa fa-phone"></i>
+          {props.PhoneNumber}
+        </span>
+        <span>
+          <i className="fa fa-venus"></i> {props.Gender}
+        </span>
       </div>
     </div>
-    <div className="ellipses"></div>
+    <div
+      className="ellipses"
+      onClick={() => props.viewDetail(props.index)}></div>
+    <div
+      className="dropdown-content"
+      style={{ display: props.show[props.index] == true ? "block" : "none" }}>
+      <ul className="more_menu">
+        <li onClick={() => props.showDetailModal(props)}>view detail</li>
+        <li>update</li>
+      </ul>
+    </div>
   </div>
 );

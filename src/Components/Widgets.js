@@ -57,6 +57,19 @@ export const TopItemMenu = (props) => (
   <div className="top_menu">
     <div className="page_name">
       <span>Profiles</span>
+      <span
+        style={{
+          paddingLeft: "2em",
+          cursor: "pointer",
+          display:
+            props.filtering == true || props.searching == true
+              ? "inline-block"
+              : "none",
+        }}
+        onClick={props.reload}>
+        <i class="fa fa-chevron-left"></i>
+        <span style={{ fontSize: "14px" }}>Back</span>
+      </span>
     </div>
     <div className="search_filter">
       <SearchBar handleSearch={props.handleSearch} />
@@ -118,6 +131,113 @@ export const Modal = (props) => {
   );
 };
 
+export const DetailContent = (props) => {
+  return (
+    <Modal
+      modalTitle={`${props.user_info.FirstName} ${props.user_info.LastName}`}
+      style={{ marginTop: "8em" }}>
+      <div className="profile-content">
+        <div className="profile-box profile-box1">
+          <label>Gender</label>
+          <div className="info_div">
+            <div className="">
+              <span>{props.user_info.Gender}</span>
+            </div>
+          </div>
+        </div>
+        <div className="profile-box profile-box2">
+          <label>Location</label>
+          <div className="info_div">
+            <div className="">
+              <span>{props.user_info.Latitude}</span>
+            </div>
+          </div>
+        </div>
+        <div className="profile-box profile-box3">
+          <label>Credit Card Number</label>
+          <div className="info_div">
+            <div className="">
+              <span>{props.user_info.CreditCardNumber}</span>
+            </div>
+          </div>
+        </div>
+        <div className="profile-box profile-box1">
+          <label>Credit Card Type</label>
+          <div className="info_div">
+            <div className="">
+              <span>{props.user_info.CreditCardType}</span>
+            </div>
+          </div>
+        </div>
+        <div className="profile-box profile-box2">
+          <label>Email</label>
+          <div className="info_div">
+            <div className="">
+              <span>{props.user_info.Email}</span>
+            </div>
+          </div>
+        </div>
+        <div className="profile-box profile-box1">
+          <label>Phone Number</label>
+          <div className="info_div">
+            <div className="">
+              <span>{props.user_info.PhoneNumber}</span>
+            </div>
+          </div>
+        </div>
+        <div className="profile-box profile-box2">
+          <label>DomainName</label>
+          <div className="info_div">
+            <div className="">
+              <span>{props.user_info.DomainName}</span>
+            </div>
+          </div>
+        </div>
+        <div className="profile-box profile-box3">
+          <label>URL</label>
+          <div className="info_div">
+            <div className="">
+              <span>{props.user_info.URL}</span>
+            </div>
+          </div>
+        </div>
+        <div className="profile-box profile-box1">
+          <label>Mac Address</label>
+          <div className="info_div">
+            <div className="">
+              <span>{props.user_info.MacAddress}</span>
+            </div>
+          </div>
+        </div>
+        <div className="profile-box profile-box2">
+          <label>UserName</label>
+          <div className="info_div">
+            <div className="">
+              <span>{props.user_info.UserName}</span>
+            </div>
+          </div>
+        </div>
+        <div className="profile-box profile-box1">
+          <label>Last Logged In</label>
+          <div className="info_div">
+            <div className="">
+              <span>{props.user_info.LastLogin}</span>
+            </div>
+          </div>
+        </div>
+        <div className="profile-box profile-box2">
+          <label>Payment Method</label>
+          <div className="info_div">
+            <div className="">
+              <span>{props.user_info.PaymentMethod}</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </Modal>
+  );
+};
+
 export const FilterContainer = (props) => {
   const initialState = {
     gender: "",
@@ -137,34 +257,46 @@ export const FilterContainer = (props) => {
       <div className="content_body">
         <div className="input-box1">
           <label>Filter By Gender</label>
-          <div className="input_div">
-            <select name="gender" value={input.gender} onChange={handleChange}>
-              <option>Choose...</option>
-              <option value="Male">Male</option>
-              <option value="Female">Female</option>
-            </select>
+          <div className="input-box ">
+            <div className="input_div">
+              <select
+                name="gender"
+                className="type-field"
+                value={input.gender}
+                onChange={handleChange}>
+                <option>Choose...</option>
+                <option value="Male">Male</option>
+                <option value="Female">Female</option>
+              </select>
+            </div>
           </div>
         </div>
-        <div className="input-box2">
+        {/* <div className="input-box2">
           <label>Filter By Credit Card</label>
-          <div className="input_div">
-            <input
-              type="text"
-              name="card"
-              value={input.card}
-              onChange={handleChange}
-            />
+          <div className="input-box">
+            <div className="input_div">
+              <input
+                type="text"
+                className="type-field"
+                name="card"
+                value={input.card}
+                onChange={handleChange}
+              />
+            </div>
           </div>
-        </div>
-        <div className="input-box1">
+        </div> */}
+        <div className="input-box2">
           <label>Filter By Payment Method</label>
-          <div className="input_div">
-            <input
-              type="text"
-              name="payment_method"
-              value={input.payment_method}
-              onChange={handleChange}
-            />
+          <div className="input-box">
+            <div className="input_div">
+              <input
+                type="text"
+                className="type-field"
+                name="payment_method"
+                value={input.payment_method}
+                onChange={handleChange}
+              />
+            </div>
           </div>
         </div>
         <div className="input-box4">
@@ -181,6 +313,7 @@ export const FilterButton = (props) => {
     setState({
       ...state,
       display: true,
+      view: false,
     });
   };
 

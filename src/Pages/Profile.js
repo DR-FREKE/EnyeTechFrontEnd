@@ -7,10 +7,15 @@ import {
   Pagination,
   TopItemMenu,
   Loader,
+  DetailContent,
 } from "../Components/Widgets";
+import { act } from "react-dom/test-utils";
 
 const UserProfile = (props) => {
   const [state, setState] = useContext(AppContext);
+  const [show, setShow] = useState({
+    isActive: [],
+  });
 
   useEffect(() => {
     getUserProfile();
@@ -22,9 +27,11 @@ const UserProfile = (props) => {
     } else if (state.searching == true) {
       handleSearch(state.itemToSearch);
     } else {
-      loadList();
+      if (state.size > 0) {
+        loadList();
+      }
     }
-  }, [state.currentPage, state.filtering, state.searching]);
+  }, [state.currentPage, state.filtering, state.searching, state.size]);
 
   const getUserProfile = async () => {
     try {
@@ -48,6 +55,9 @@ const UserProfile = (props) => {
     setState({
       ...state,
       itemOnPage: state.profile.slice(begin, end),
+      filtering: false,
+      searching: false,
+      size: state.profile.length,
     });
     console.log(state.itemOnPage);
   };
@@ -115,19 +125,19 @@ const UserProfile = (props) => {
       itemToFilter: data,
       size: result.length,
       display: false,
+      // currentPage: parseInt(Math.ceil(result.length / 20)),
     });
   };
 
   const handleSearch = (data) => {
-    const new_data = data.split(" ");
+    const new_data =
+      data.substring(0, 1).toUpperCase() + data.substring(1, data.length);
 
     //get the profile from state and search by the data provided in parameter
     const result = state.profile.filter(
       (content) =>
-        content.FirstName == new_data[0] ||
-        content.FirstName == new_data[1] ||
-        content.LastName == new_data[0] ||
-        content.LastName == new_data[1]
+        content.FirstName.includes(new_data) ||
+        content.LastName.includes(new_data)
     );
     setState({
       ...state,
@@ -139,6 +149,24 @@ const UserProfile = (props) => {
     });
   };
 
+  const viewDetail = (id) => {
+    let activeDropdown = [];
+    activeDropdown[id] = true;
+    setShow({
+      isActive: activeDropdown,
+    });
+  };
+
+  const showDetailModal = (props) => {
+    setState({
+      ...state,
+      display: true,
+      view: true,
+      user_info: props,
+    });
+    setShow({ isActive: [] });
+  };
+
   const itemToShow = () => {
     let itemToDisplay;
     if (state.loading == true) {
@@ -146,11 +174,22 @@ const UserProfile = (props) => {
     } else {
       itemToDisplay = (
         <>
-          <TopItemMenu handleSearch={handleSearch} />
+          <TopItemMenu
+            filtering={state.filtering}
+            searching={state.searching}
+            handleSearch={handleSearch}
+            reload={() => loadList()}
+          />
           <div className="grid">
-            {state.itemOnPage.map((content) => (
+            {state.itemOnPage.map((content, index) => (
               <div className="box box1">
-                <Card {...content} />
+                <Card
+                  {...content}
+                  viewDetail={viewDetail}
+                  index={index}
+                  show={show.isActive}
+                  showDetailModal={showDetailModal}
+                />
               </div>
             ))}
           </div>
@@ -161,7 +200,11 @@ const UserProfile = (props) => {
             </div>
             {renderPagination()}
           </div>
-          <FilterContainer handleFilter={handleFilter} />
+          {state.view == true ? (
+            <DetailContent user_info={state.user_info} />
+          ) : (
+            <FilterContainer handleFilter={handleFilter} />
+          )}
         </>
       );
     }
